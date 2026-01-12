@@ -8,9 +8,9 @@
  * Pin 2: Front-right
  */
 #define LED_PIN_1   38
-// #define LED_PIN_2   38
 #define LED_COUNT_1 144
-// #define LED_COUNT_2 144
+
+#define FAST_LIGHTING_UPDATES 1
 
 #define UPDATE_FLAG_SATURATION  0x1
 #define UPDATE_FLAG_BRIGHTNESS  0x2
@@ -20,12 +20,10 @@
 unsigned int update_flags = ~0;
 
 CRGB strip1[LED_COUNT_1];
-// CRGB strip2[LED_COUNT_2];
 
 void lighting_init()
 {
     FastLED.addLeds<WS2812, LED_PIN_1, GRB>(strip1, LED_COUNT_1);
-    // FastLED.addLeds<WS2812, LED_PIN_2, GRB>(strip2, LED_COUNT_2);
 }
 
 /**
@@ -47,11 +45,6 @@ int update_lighting(int force_all = 0)
             {
                 strip1[i] = CHSV((uint8_t)(GLOBAL_CONFIG.lighting_hue), (uint8_t)(GLOBAL_CONFIG.saturation), 255);
             }
-
-            // for (int i = 0; i < LED_COUNT_2; i++)
-            // {
-            //     strip2[i] = CHSV((uint8_t)(GLOBAL_CONFIG.lighting_hue), 255, 255);
-            // }
         }
 
         update_flags = 0;
