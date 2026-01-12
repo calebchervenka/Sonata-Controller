@@ -68,7 +68,7 @@ void setup()
   // Brightness slider
   brightness_slider = lv_slider_create(screen);
   lv_slider_set_range(brightness_slider, 0, 255);
-  lv_slider_set_value(brightness_slider, GLOBAL_CONFIG.lighting_hue, LV_ANIM_OFF);
+  lv_slider_set_value(brightness_slider, GLOBAL_CONFIG.brightness, LV_ANIM_OFF);
   lv_obj_add_event_cb(brightness_slider, on_brightness_slider_adjusted, FAST_LIGHTING_UPDATES ? LV_EVENT_VALUE_CHANGED : LV_EVENT_RELEASED, NULL);
   lv_obj_center(brightness_slider);
   lv_obj_set_width(brightness_slider, 640);
