@@ -49,15 +49,21 @@ void write_config_to_file()
 
 void update_config_from_file()
 {
-    GLOBAL_CONFIG = {
-        .lighting_hue = 0,
-        .saturation = 255,
-        .brightness = 255,
-        .is_lighting_on = 1
-    };
-    // String file_contents = read_file(CONFIG_FILE);
-    // file_contents.toCharArray(CONFIG_BUFFER, CONFIG_BUFFER_SIZE);
+    String file_contents = read_file(CONFIG_FILE);
+    file_contents.toCharArray(CONFIG_BUFFER, CONFIG_BUFFER_SIZE);
     
-    // int on;
-    // sscanf(CONFIG_BUFFER, "%d %d %d\r", &GLOBAL_CONFIG.lighting_hue, &GLOBAL_CONFIG.brightness, &GLOBAL_CONFIG.is_lighting_on);
+    sscanf(CONFIG_BUFFER, 
+        "%d %d %d %d\r", 
+        &GLOBAL_CONFIG.lighting_hue,
+        &GLOBAL_CONFIG.saturation,
+        &GLOBAL_CONFIG.brightness,
+        &GLOBAL_CONFIG.is_lighting_on
+    );
+    Serial.println("Config contents: ");
+    Serial.printf("%d %d %d %d\n\r", 
+        GLOBAL_CONFIG.lighting_hue,
+        GLOBAL_CONFIG.saturation,
+        GLOBAL_CONFIG.brightness,
+        GLOBAL_CONFIG.is_lighting_on
+    );
 }

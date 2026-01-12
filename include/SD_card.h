@@ -17,13 +17,13 @@ int sd_card_init()
 {
     SD_SPI.begin(SD_SCK, SD_MISO, SD_MOSI, SD_CS);
     if (!SD.begin(SD_CS, SD_SPI, 80000000)) {
-        Serial.println("Successfully mounted SD card.");
-        return 1;
+        Serial.println("Failed to mount SD card!");
+        return 0;
     }
     else
     {
-        Serial.println("Failed to mount SD card!");
-        return 0;
+        Serial.println("Successfully mounted SD card.");
+        return 1;
     }
 }
 
