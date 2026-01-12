@@ -7,7 +7,7 @@
  * Pin 1: Front-left
  * Pin 2: Front-right
  */
-#define LED_PIN_1   44
+#define LED_PIN_1   38
 // #define LED_PIN_2   38
 #define LED_COUNT_1 144
 // #define LED_COUNT_2 144
