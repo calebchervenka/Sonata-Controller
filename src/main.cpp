@@ -12,6 +12,8 @@
 void screen_init();
 void update_from_file();
 
+int use_persistent_config;
+
 lv_obj_t* screen;
 
 void setup() 
@@ -21,13 +23,20 @@ void setup()
   // Wait 800ms to wait for voltage to level out when system starts
   // delay(800);
 
-  if (!config_init()) update_config_from_file();
+  if (config_init())
+  {
+    use_persistent_config = 0;
+  }
+  else
+  {
+    use_persistent_config = 1;
+  }
 
   lighting_init();
 
   screen_init();
 
-  update_lighting(1);
+  update_from_file();
   Serial.println("Setup complete. Starting loop.");
 }
 
@@ -66,6 +75,8 @@ void screen_init()
 // -------------------
 void update_from_file()
 {
+  if (!use_persistent_config) return;
+  
   // Update local data
   update_config_from_file();
 
