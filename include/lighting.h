@@ -17,19 +17,27 @@
 #define UPDATE_FLAG_HUE         0x4
 #define UPDATE_FLAG_4           0x8
 
-unsigned int update_flags = ~0;
+unsigned int update_flags;
+
+int64_t init_time;
+bool first_update_called;
 
 CRGB strip1[LED_COUNT_1];
 
 void lighting_init();
 int update_lighting(int);
+void set_all_flags();
 
 
 void lighting_init()
 {
     FastLED.addLeds<WS2812, LED_PIN_1, GRB>(strip1, LED_COUNT_1);
 
-    update_lighting(1);
+    // Set all update flags
+    set_all_flags();
+
+    // Set LEDs to off
+    FastLED.setBrightness(0);
 }
 
 /**
@@ -37,25 +45,29 @@ void lighting_init()
  */
 int update_lighting(int force_all = 0)
 {
-    if (force_all) update_flags = ~0;
+    if (force_all) set_all_flags();
+
     if (update_flags)
     {   
-        if (update_flags & UPDATE_FLAG_BRIGHTNESS)
-        {
-            FastLED.setBrightness(GLOBAL_CONFIG.is_lighting_on ? GLOBAL_CONFIG.brightness : 0);
-        }
-
+        first_update_called = 1;
         if (update_flags & (UPDATE_FLAG_HUE | UPDATE_FLAG_SATURATION))
         {
             for (int i = 0; i < LED_COUNT_1; i++)
             {
                 strip1[i] = CHSV((uint8_t)(GLOBAL_CONFIG.lighting_hue), (uint8_t)(GLOBAL_CONFIG.saturation), 255);
             }
+            update_flags &= ~(UPDATE_FLAG_HUE | UPDATE_FLAG_SATURATION);
         }
 
-        update_flags = 0;
+        if (update_flags & UPDATE_FLAG_BRIGHTNESS)
+        {
+            FastLED.setBrightness(GLOBAL_CONFIG.is_lighting_on ? GLOBAL_CONFIG.brightness : 0);
+            update_flags &= ~UPDATE_FLAG_BRIGHTNESS;
+        }
+
         FastLED.show();
 
+        Serial.println("Lighting updated.");
         return 1;
     }
     else
@@ -86,4 +98,9 @@ void set_saturation(int saturation)
 {
     GLOBAL_CONFIG.saturation = saturation;
     update_flags |= UPDATE_FLAG_SATURATION;
+}
+
+void set_all_flags()
+{
+    update_flags = UPDATE_FLAG_BRIGHTNESS | UPDATE_FLAG_HUE | UPDATE_FLAG_SATURATION;
 }
