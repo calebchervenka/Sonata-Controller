@@ -62,11 +62,4 @@ void update_config_from_file()
         &GLOBAL_CONFIG.brightness,
         &GLOBAL_CONFIG.is_lighting_on
     );
-    Serial.println("Config contents: ");
-    Serial.printf("%d %d %d %d\n\r", 
-        GLOBAL_CONFIG.lighting_hue,
-        GLOBAL_CONFIG.saturation,
-        GLOBAL_CONFIG.brightness,
-        GLOBAL_CONFIG.is_lighting_on
-    );
 }
