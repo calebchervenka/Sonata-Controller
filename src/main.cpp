@@ -25,6 +25,14 @@ void setup()
 
   screen_init();
 
+  // Startup animation
+  for (int i = 0; i < 255; i++)
+  {
+    set_brightness(i);
+    delay(2);
+    update_lighting();
+  }
+
   Serial.println("Setup complete. Starting loop.");
 }
 
