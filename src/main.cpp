@@ -10,6 +10,7 @@
 #define LV_VER_RES_MAX 480
 
 void screen_init();
+void startup();
 
 lv_obj_t* screen;
 
@@ -25,13 +26,7 @@ void setup()
 
   screen_init();
 
-  // Startup animation
-  for (int i = 0; i < 255; i++)
-  {
-    set_brightness(i);
-    delay(2);
-    update_lighting();
-  }
+  startup();
 
   Serial.println("Setup complete. Starting loop.");
 }
@@ -64,4 +59,19 @@ void screen_init()
   widgets_init(screen);
 
   backlight_init();
+}
+
+void startup()
+{
+  // Set screen image
+
+  // Lighting animation
+  for (int i = 0; i < 255; i++)
+  {
+    set_brightness(i);
+    delay(2);
+    update_lighting();
+  }
+
+  // Clear screen image
 }
