@@ -10,6 +10,7 @@ typedef struct {
     int saturation;
     int brightness;
     int is_lighting_on;
+    int animation_index;
 } Config;
 static Config GLOBAL_CONFIG;
 
@@ -34,11 +35,12 @@ int config_init()
 void export_global_config_to_string(char** result)
 {
     snprintf(*result, CONFIG_BUFFER_SIZE, 
-        "%d %d %d %d\r", 
+        "%d %d %d %d %d\r", 
         GLOBAL_CONFIG.lighting_hue,
         GLOBAL_CONFIG.saturation,
         GLOBAL_CONFIG.brightness,
-        GLOBAL_CONFIG.is_lighting_on
+        GLOBAL_CONFIG.is_lighting_on,
+        GLOBAL_CONFIG.animation_index
     );
 }
 
@@ -56,10 +58,11 @@ void update_config_from_file()
     file_contents.toCharArray(CONFIG_BUFFER, CONFIG_BUFFER_SIZE);
     
     sscanf(CONFIG_BUFFER, 
-        "%d %d %d %d\r", 
+        "%d %d %d %d %d\r", 
         &GLOBAL_CONFIG.lighting_hue,
         &GLOBAL_CONFIG.saturation,
         &GLOBAL_CONFIG.brightness,
-        &GLOBAL_CONFIG.is_lighting_on
+        &GLOBAL_CONFIG.is_lighting_on,
+        &GLOBAL_CONFIG.animation_index
     );
 }
