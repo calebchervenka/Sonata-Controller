@@ -15,8 +15,8 @@ An ESP32-based lighting controller with a touchscreen UI, designed for vehicle i
 - **LVGL-based UI**
   - Touch-friendly interface with smooth rendering.
 - **Live LED updates**
-  - Enable real-time LED changes while adjusting settings by defining  
-    `FAST_LIGHTING_UPDATES` in `lighting.h`.
+  - Enable real-time LED changes while adjusting settings by setting  
+    `FAST_LIGHTING_UPDATES 1` in `lighting.h`.
 
 ---
 
