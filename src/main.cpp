@@ -4,6 +4,7 @@
 
 #include "widgets.h"
 #include "display.h"
+#include "wireless.h"
 
 // Screen size information
 #define LV_HOR_RES_MAX 800
@@ -23,6 +24,8 @@ void setup()
     update_config_from_file();
 
   lighting_init();
+
+  wireless_init();
 
   screen_init();
 
