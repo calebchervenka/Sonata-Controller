@@ -23,6 +23,8 @@ typedef struct {
 
 void write_config_to_file();
 void update_config_from_file();
+void update_config_from_str(String);
+void update_config_from_buffer();
 
 /**
  * Returns 1 if the persistent config could not be connected
@@ -57,6 +59,18 @@ void update_config_from_file()
     String file_contents = read_file(CONFIG_FILE);
     file_contents.toCharArray(CONFIG_BUFFER, CONFIG_BUFFER_SIZE);
     
+    update_config_from_buffer();
+}
+
+void update_config_from_str(String text)
+{
+    text.toCharArray(CONFIG_BUFFER, CONFIG_BUFFER_SIZE);
+
+    update_config_from_buffer();
+}
+
+void update_config_from_buffer()
+{
     sscanf(CONFIG_BUFFER, 
         "%d %d %d %d %d\r", 
         &GLOBAL_CONFIG.lighting_hue,
